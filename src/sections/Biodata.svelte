@@ -4,9 +4,8 @@
     import Processing from '@/extra/Processing.svelte'
     import ArrowCircleRight from '@/extra/ArrowCircleRight.svelte'
 
-
-
     export let baseUrl
+    
     const biodata = {
         id: null,
         photo: '',
@@ -34,7 +33,7 @@
     }
     let src, submitting
 
-    fetch(baseUrl + sessionStorage.salt + '/' + sessionStorage.id_pendaftar + '/biodata')
+    fetch(baseUrl + 'biodata/' + sessionStorage.salt + '/' + sessionStorage.id_pendaftar)
     .then(response => response.json())
     .then(data => {
         console.log('biodata', data)
@@ -204,8 +203,8 @@
             {#if biodata.photo !== ''}
             <img class="w-full" {src} alt="">
             {:else}
-            <div class="text-center">
-                Upload Foto<br><span class="text-xs">(wajib diisi)</span>
+            <div class="text-center text-xs lg:text-sm">
+                Upload Foto Close Up<br><span class="text-xs">(wajib diisi)</span>
             </div>
             {/if}
         </label>
@@ -229,7 +228,7 @@
 
         <div>
             <div class="font-medium py-2 md:px-1">Tempat dan Tanggal Lahir<span class="text-red-500">*</span>:</div>
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2">
                 <input type="text" bind:value="{biodata.pob}" class="border rounded p-2 {biodata.pob.trim() == '' ? 'border-red-300':'border-blue-300'}" placeholder="tempat kelahiran" on:change="{e => autoUpdate(e, 'pob')}">
                 <div class="grid">
                     <div id="tanggal-survey" class="py-2 px-4 rounded border col-start-1 col-end-1 row-start-1 row-end-1 {biodata.dob.trim() == '' ? 'border-red-300':'border-blue-300'}">{ biodata.dob == '' ? 'Tanggal Lahir':birthDate(new Date(biodata.dob)) }</div>

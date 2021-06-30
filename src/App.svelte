@@ -9,6 +9,9 @@
 	import EduAchievement from '@/sections/EduAchievement.svelte'
 	import Experiences from '@/sections/Experiences.svelte'
 	import BusinessProfile from '@/sections/BusinessProfile.svelte'
+	import DataLain from '@/sections/DataLain.svelte'
+	let url = ''
+	const baseUrl = 'https://sentra.test/api/camp-bcic/'
 
 	
 	function authorizing() {
@@ -20,7 +23,7 @@
 		formData.append('salt', sessionStorage.salt)
 		formData.append('id_pendaftar', sessionStorage.id_pendaftar)
 
-		fetch('https://sentra.test/api/camp-bcic/verify-registrant', {
+		fetch(baseUrl + 'verify-registrant', {
 			method: 'POST',
 			body: formData
 		})
@@ -34,8 +37,6 @@
 	}
 	authorizing()
 
-	let url = ''
-	const baseUrl = 'https://sentra.test/api/camp-bcic/'
 </script>
 
 <div class="px-0 md:px-20 xl:max-w-screen-xl xl:mx-auto xl:px-24">
@@ -58,6 +59,10 @@
 
 		<Route path="/profil-usaha">
 			<BusinessProfile {baseUrl}/>
+		</Route>
+
+		<Route path="/data-lainnya">
+			<DataLain {baseUrl}/>
 		</Route>
 
 	</Router>

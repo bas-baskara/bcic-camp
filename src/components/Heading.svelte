@@ -9,5 +9,5 @@
 
 <p class="p-2 text-xs text-justify md:text-base lg:py-4">Isi formulir dibawah ini dengan lengkap. Semua jawaban
 yang anda berikan, akan diverifikasi pada proses interview, termasuk untuk membawa bukti
-protofolio hasil rancangan anda.
+portofolio hasil rancangan anda.
 </p>
