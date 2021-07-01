@@ -150,7 +150,20 @@
 
         for ( let[key, value] of Object.entries(biodata) ) {
             if ( !optional.includes(key) ) {
-                if ( value.trim() == '' ) {
+                if (key == 'nik') {
+                    if (value.trim().length < 16) {
+                        Swal.fire({
+                            title: 'Data Belum Lengkap',
+                            text: 'Silakan lengkapi kolom yang harus diisi!',
+                            icon: 'error',
+                            confirmButtonText: 'Ok',
+                            confirmButtonColor: '#3984fb'
+                        })
+                        submitting = false
+                        return
+
+                    }
+                } else if ( value.trim() == '' ) {
                     Swal.fire({
                         title: 'Data Belum Lengkap',
                         text: 'Silakan lengkapi kolom yang harus diisi!',
@@ -175,12 +188,9 @@
         .then(response => response.json())
         .then(data => {
             console.log('nextStep', data)
-            if ( data.status == 'ok' ) navigate('/pendidikan-dan-pencapaian')
+            if ( data.status == 'ok' ) navigate('/camp-bcic/form/pendidikan-dan-pencapaian')
         })
         .catch(err => {
-
-            setTimeout(() => {
-                submitting = false
                 Swal.fire({
                     title: 'Gagal',
                     text: 'Pastikan koneksi internet anda stabil!',
@@ -188,6 +198,10 @@
                     confirmButtonText: 'Ok',
                     confirmButtonColor: '#3984fb'
                 })
+                submitting = false
+
+            setTimeout(() => {
+                location.reload()
             }, 2000);
         })
     }
@@ -239,7 +253,7 @@
         </div>
         <div>
             <div class="font-medium py-2 md:px-1">N.I.K<span class="text-red-500">*</span>:</div>
-            <input type="text" class="p-2 w-full border rounded {biodata.nik.trim() == '' ? 'border-red-300':'border-blue-300'}" maxlength="16" bind:value="{biodata.nik}" on:input="{e => keepDigit(e, 'nik')}" on:change="{e => autoUpdate(e, 'nik')}">
+            <input type="text" class="p-2 w-full border rounded {biodata.nik.trim().length < 16 ? 'border-red-300':'border-blue-300'}" maxlength="16" bind:value="{biodata.nik}" on:input="{e => keepDigit(e, 'nik')}" on:change="{e => autoUpdate(e, 'nik')}">
         </div>
         <div>
             <div class="font-medium py-2 md:px-1">Alamat Sesuai KTP<span class="text-red-500">*</span>:</div>

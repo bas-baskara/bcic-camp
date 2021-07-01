@@ -11,12 +11,12 @@
 	import BusinessProfile from '@/sections/BusinessProfile.svelte'
 	import DataLain from '@/sections/DataLain.svelte'
 	let url = ''
-	const baseUrl = 'https://sentra.test/api/camp-bcic/'
+	const baseUrl = 'https://smartsentra.kemenperin.go.id/api/camp-bcic/'
 
 	
 	function authorizing() {
 		if ( !sessionStorage.salt || !sessionStorage.id_pendaftar ) {
-			// location.href = "/"
+			location.href = "/form-pendaftaran"
 		}
 
 		const formData = new FormData
@@ -30,8 +30,8 @@
 		.then(response => {
 			console.log('response', response)
 			if ( response.status !== 200 ) {
-				// sessionStorage.clear()
-				// location.href = "/"
+				sessionStorage.clear()
+				location.href = "/form-pendaftaran"
 			}
 		})
 	}
@@ -45,23 +45,23 @@
 
 	<Router url={url}>
 		
-		<Route path="/biodata">
+		<Route path="/camp-bcic/form/biodata">
 			<Biodata {baseUrl}/>
 		</Route>
 
-		<Route path="/pendidikan-dan-pencapaian">
+		<Route path="/camp-bcic/form/pendidikan-dan-pencapaian">
 			<EduAchievement {baseUrl}/>
 		</Route>
 
-		<Route path="/pengalaman-kerja-dan-organisasi">
+		<Route path="/camp-bcic/form/pengalaman-kerja-dan-organisasi">
 			<Experiences {baseUrl}/>
 		</Route>
 
-		<Route path="/profil-usaha">
+		<Route path="/camp-bcic/form/profil-usaha">
 			<BusinessProfile {baseUrl}/>
 		</Route>
 
-		<Route path="/data-lainnya">
+		<Route path="/camp-bcic/form/data-lainnya">
 			<DataLain {baseUrl}/>
 		</Route>
 

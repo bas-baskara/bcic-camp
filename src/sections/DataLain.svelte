@@ -81,21 +81,21 @@ function nextStep() {
             submitting = false
             return
         } else {
-            navigate('/')
+            location.href="/pendaftaran-camp-bcic-selesai"
         }
     })
     .catch(err => {
         submitting = false
+        Swal.fire({
+            title: 'Gagal',
+            text: 'Pastikan koneksi internet anda stabil!',
+            icon: 'error',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#3984fb'
+        })
 
         setTimeout(() => {
-            submitting = false
-            Swal.fire({
-                title: 'Gagal',
-                text: 'Pastikan koneksi internet anda stabil!',
-                icon: 'error',
-                confirmButtonText: 'Ok',
-                confirmButtonColor: '#3984fb'
-            })
+            location.reload()
         }, 2000);
     })
 }
@@ -177,7 +177,7 @@ function nextStep() {
 
 <div class="p-2 flex justify-between">
     
-    <button class="flex items-center gap-2 rounded-full bg-blue-500 py-2 px-4 text-white text-sm md:font-medium md:text-base md:py-2 md:px-6 lg:py-3 lg:text-base lg:font-bold" on:click="{() => navigate('/profil-usaha')}"><ArrowCircleLeft/> Sebelumnya</button>
+    <button class="flex items-center gap-2 rounded-full bg-blue-500 py-2 px-4 text-white text-sm md:font-medium md:text-base md:py-2 md:px-6 lg:py-3 lg:text-base lg:font-bold" on:click="{() => navigate('/camp-bcic/form/profil-usaha')}"><ArrowCircleLeft/> Sebelumnya</button>
 
     <button class="flex items-center gap-2 rounded-full bg-blue-500 py-2 px-4 text-white text-sm md:font-medium md:text-base md:py-2 md:px-6 lg:py-3 lg:text-base lg:font-bold" on:click="{submit}">Lanjutkan <ArrowCircleRight/></button>
 </div>
