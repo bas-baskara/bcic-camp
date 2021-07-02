@@ -31,43 +31,52 @@
         ig: '',
         yt: ''
     }
-    let src, submitting
+    let src = '', submitting = false
 
-    fetch(baseUrl + 'biodata/' + sessionStorage.salt + '/' + sessionStorage.id_pendaftar)
-    .then(response => response.json())
-    .then(data => {
-        console.log('biodata', data)
-        for ( let[key, value] of Object.entries(data.user) ) {
-            if (key in biodata) {
-                if ( value === null ) {
-                    biodata[key] = ''
-                } else {
-                    biodata[key] = value
-                }
-            }
-        }
-
-        src = baseUrl + 'photo-registrant/' + sessionStorage.salt + '/' + sessionStorage.id_pendaftar
-
-    })
-
-    fetch(baseUrl + 'business-profile/' + sessionStorage.salt + '/' + sessionStorage.id_pendaftar)
-    .then(response => response.json())
-    .then(data => {
-        console.log('business profile', data)
-
-        if ( data.business !== null ) {
-            for ( let[key,value] of Object.entries(data.business) ) {
-                if ( key in business ) {
+    const getBiodata = (function() {
+        fetch(baseUrl + 'biodata/' + sessionStorage.salt + '/' + sessionStorage.id_pendaftar)
+        .then(response => response.json())
+        .then(data => {
+            console.log('biodata', data)
+            for ( let[key, value] of Object.entries(data.user) ) {
+                if (key in biodata) {
                     if ( value === null ) {
-                        business[key] = ''
+                        biodata[key] = ''
                     } else {
-                        business[key] = value
+                        biodata[key] = value
                     }
                 }
             }
-        }
+
+            if ( src == '' ) src = baseUrl + 'photo-registrant/' + sessionStorage.salt + '/' + sessionStorage.id_pendaftar
+
+        })
     })
+
+    getBiodata()
+
+    const getDataBusiness = (function() {
+        fetch(baseUrl + 'business-profile/' + sessionStorage.salt + '/' + sessionStorage.id_pendaftar)
+        .then(response => response.json())
+        .then(data => {
+            console.log('business profile', data)
+
+            if ( data.business !== null ) {
+                for ( let[key,value] of Object.entries(data.business) ) {
+                    if ( key in business ) {
+                        if ( value === null ) {
+                            business[key] = ''
+                        } else {
+                            business[key] = value
+                        }
+                    }
+                }
+            }
+        })
+    })
+
+    getDataBusiness()
+
 
     //
     function sendPhoto(file) {
@@ -83,7 +92,7 @@
         .then(response => response.json())
         .then(data => {
             console.log('sendPhoto response', data)
-
+            getBiodata()
         })
     }
     
@@ -103,7 +112,8 @@
         const file = e.target.files[0]
 
         reader.onload = (event) => {
-            biodata.photo = event.target.result
+            src = event.target.result
+            biodata.photo = 'ok'
         }
 
         reader.readAsDataURL(file)
@@ -122,7 +132,10 @@
             body
         })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data)
+            getBiodata()
+        })
     }
 
     function keepDigit(e, which) {
@@ -140,7 +153,10 @@
             body
         })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data)
+            getDataBusiness()
+        })
 
     }
 
@@ -235,6 +251,7 @@
         <div>
             <div class="font-medium py-2 md:px-1">Jenis Kelamin<span class="text-red-500">*</span>:</div>
             <select id="sex" class="p-2 border rounded min-w-1/4 bg-white {biodata.sex.trim() == '' ? 'border-red-300':'border-blue-300'}" bind:value="{biodata.sex}" on:blur="{e => autoUpdate(e, 'sex')}">
+                <option value="">Silakan Pilih</option>                
                 <option value="perempuan">Perempuan</option>                
                 <option value="laki-laki">Laki-laki</option>                
             </select>
