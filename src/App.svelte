@@ -11,6 +11,7 @@
 	import BusinessProfile from '@/sections/BusinessProfile.svelte'
 	import DataLain from '@/sections/DataLain.svelte'
 	let url = ''
+	// const baseUrl = 'https://sentra.test/api/camp-bcic/'
 	const baseUrl = 'https://smartsentra.kemenperin.go.id/api/camp-bcic/'
 
 	
@@ -75,5 +76,14 @@
 <style global lang="postcss">
 	@tailwind base;
 	@tailwind components;
+
+		.tooltip {
+		@apply invisible absolute;
+		}
+
+		.has-tooltip:hover .tooltip {
+		@apply visible z-50;
+		}
+
 	@tailwind utilities;
 </style>
