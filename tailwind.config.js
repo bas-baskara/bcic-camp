@@ -18,6 +18,9 @@ module.exports = {
       minWidth: {
         '1/4': '25%',
         '1/2': '50%',
+      },
+      fontSize: {
+        'xxs': '0.5rem'
       }
     },
   },

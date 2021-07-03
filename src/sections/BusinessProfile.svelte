@@ -154,7 +154,10 @@
 
         <textarea rows="1" class="p-2 w-full border md:rounded lg:h-40 lg:col-span-3 lg:-mt-3 {profile.expectation.trim() == '' ? 'border-red-500':'border-blue-300'}" bind:value="{profile.expectation}" on:change="{autoUpdateBusiness}"></textarea>
 
-        <div class="p-2 font-medium lg:col-span-3">Gambar Contoh Produk Anda<span class="text-red-500 text-xs font-light lg:text-sm xl:text-base">*</span></div>
+        <div class="p-2 font-medium lg:col-span-3">
+            <div>Gambar Contoh Produk Anda<span class="text-red-500 text-xs font-light lg:text-sm xl:text-base">*</span></div>
+            <div class="-mt-1 text-xxs font-extralight md:text-xs">(Bisa lebih dari 1 gambar produk/desain)</div>
+        </div>
 
         <Gallery {baseUrl}/>
 
