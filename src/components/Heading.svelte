@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div class="p-2 mt-2 text-center text-sm font-bold md:mt-6 md:text-xl lg:text-3xl">Formulir Pendaftaran Seleksi Peserta Program CAMP BCIC 2021</div>
+<div class="p-2 mt-2 text-center text-sm font-bold md:mt-6 md:text-xl lg:text-3xl">Formulir Pendaftaran Seleksi Peserta Program Creative Business Incubator (CBI) 2021</div>
 
 <p class="p-2 text-xs text-justify md:text-base lg:py-4">Isi formulir dibawah ini dengan lengkap. Semua jawaban
 yang anda berikan, akan diverifikasi pada proses interview, termasuk untuk membawa bukti
