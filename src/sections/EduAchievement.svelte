@@ -83,7 +83,7 @@
     
 
     const emptyStr = (val) => val.trim() == ''
-    const nonEmptyStr = (val) => val.trim() !== ''
+    const nonEmptyStr = (val) => val.trim() != ''
 
     function scanErr(obj) {
         const values = Object.values(obj)
@@ -197,21 +197,24 @@
 
     function submit() {
         submitting = true
-        console.log('sma', edu.sma)
-        if ( !Object.values(edu.sma).every(nonEmptyStr) ) {
-            submitting = false
-            Swal.fire({
-                title: 'Data Belum Lengkap',
-                text: 'Silakan lengkapi kolom yang harus diisi!',
-                icon: 'error',
-                confirmButtonText: 'Ok',
-                confirmButtonColor: '#3984fb'
-            })
-
-            return
-        }
-
-        nextStep()
+        // console.log('sma', edu.sma)
+        setTimeout(() => {
+            if ( !Object.values(edu.sma).every(nonEmptyStr) ) {
+                submitting = false
+                Swal.fire({
+                    title: 'Data Belum Lengkap',
+                    text: 'Silakan lengkapi kolom yang harus diisi!',
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: '#3984fb'
+                })
+    
+                return
+            }
+    
+            nextStep()
+            
+        }, 100);
     }
 
     function nextStep() {

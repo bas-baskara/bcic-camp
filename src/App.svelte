@@ -36,7 +36,7 @@
 			}
 		})
 	}
-	authorizing()
+	// authorizing()
 
 </script>
 

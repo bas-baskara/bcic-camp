@@ -5,7 +5,7 @@
     import Processing from '@/extra/Processing.svelte'
     import ArrowCircleRight from '@/extra/ArrowCircleRight.svelte'
     import ArrowCircleLeft from '@/extra/ArrowCircleLeft.svelte'
-    import Gallery from './Gallery.svelte'
+import { bind } from 'svelte/internal'
 
     export let baseUrl
     let submitting = false
@@ -16,7 +16,9 @@
         desc_prev_business: '',
         had_helped_other_business: null,
         family_owned_business: null,
-        desc_family_business: ''
+        desc_family_business: '',
+        tahu_cbi_dari: '',
+        tahu_cbi_dari_lain: '',
     }
 
     const getExtraData = (function() {
@@ -100,7 +102,9 @@ function nextStep() {
     })
 }
 
+const tahuDariOptions = ['Komunitas', 'Website', 'Iklan', 'Social Media (Postingan Instagram BCIC Official)', 'Instagram Ads', 'Facebook Ads', 'Youtube', 'Whatsapp Info', 'Kerabat/ Teman/ Saudara', 'Alumni CBI', 'Event Webinar BCIC']
 
+let tahuDariLain
 
 
 </script>
@@ -167,6 +171,25 @@ function nextStep() {
                 </div>
 
             </li>
+            <li>Saya mendapatkan informasi CBI 2021 dari ?"
+
+                <div class="flex flex-wrap items-center gap-2 md:gap-4">
+
+                    {#each tahuDariOptions as option}
+
+                    <button class="flex items-center gap-2 py-2 px-2 rounded text-sm text-white cursor-pointer {extraData.tahu_cbi_dari == option ? 'bg-blue-500':'bg-gray-500'}">
+                        <input type="radio" name="tahu" id="select-{option}" value={option} bind:group={extraData.tahu_cbi_dari} on:change={e => {update(option, 'tahu_cbi_dari');update('', 'tahu_cbi_dari_lain') } }>
+                        <label for="select-{option}" class="cursor-pointer">{option}</label>
+                    </button>
+
+                    {/each}
+
+                    <input type="text" class="py-2 px-2 rounded text-sm text-black border {extraData.tahu_cbi_dari == extraData.tahu_cbi_dari_lain ? 'border-blue-500':''}" bind:value={extraData.tahu_cbi_dari_lain} on:change={(e) => {extraData.tahu_cbi_dari = extraData.tahu_cbi_dari_lain;update(extraData.tahu_cbi_dari_lain, 'tahu_cbi_dari');update(extraData.tahu_cbi_dari_lain, 'tahu_cbi_dari_lain')} }>
+
+
+                </div>
+
+            </li>
             
         </ol>
 
@@ -179,7 +202,7 @@ function nextStep() {
     
     <button class="flex items-center gap-2 rounded-full bg-blue-500 py-2 px-4 text-white text-sm md:font-medium md:text-base md:py-2 md:px-6 lg:py-3 lg:text-base lg:font-bold" on:click="{() => navigate('/camp-bcic/form/profil-usaha')}"><ArrowCircleLeft/> Sebelumnya</button>
 
-    <button class="flex items-center gap-2 rounded-full bg-blue-500 py-2 px-4 text-white text-sm md:font-medium md:text-base md:py-2 md:px-6 lg:py-3 lg:text-base lg:font-bold" on:click="{submit}">Lanjutkan <ArrowCircleRight/></button>
+    <button class="flex items-center gap-2 rounded-full bg-blue-500 py-2 px-4 text-white text-sm md:font-medium md:text-base md:py-2 md:px-6 lg:py-3 lg:text-base lg:font-bold" on:click="{submit}">Selesaikan <ArrowCircleRight/></button>
 </div>
 
 
