@@ -78,7 +78,11 @@
 
     function autoUpdateOrgExperiences(orgExp) {
         if ( 'id' in orgExp ) orgExp.id = orgExp.id.toString()
-        if ( !Object.values(orgExp).every(nonEmptyStr) ) return
+        const checkOrgExp = JSON.parse(JSON.stringify(orgExp))
+        delete checkOrgExp.start
+        delete checkOrgExp.end
+
+        if ( !Object.values(checkOrgExp).every(nonEmptyStr) ) return
         orgExp.start = orgExp.startYear + '-' + orgExp.startMonth
         orgExp.end = orgExp.endYear + '-' + orgExp.endMonth
 

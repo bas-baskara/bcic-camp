@@ -9,6 +9,7 @@
     export let baseUrl
     let grid, uploadProduct, imageFile, submitting = false
     let images = []
+    let progress = '0%'
     
     const getImages = (function() {
         fetch(baseUrl + 'get-product-images/' + sessionStorage.salt + '/' + sessionStorage.id_pendaftar)
@@ -41,6 +42,7 @@
         console.log('grid', grid)
         getImages()
     })
+
 
     function sendFile(e) {
         submitting = true
@@ -117,8 +119,9 @@
             .then(response => response.json())
             .then(data => {
                 if (data.result == 'completed') {
-                    getImages()
                     submitting = false
+                    progress = '0%'
+                    getImages()
                     imageFile = null
                     return
                 } else if (data.result == 'too big') {
@@ -135,10 +138,12 @@
                 }
 
                 uploadImageStart(nextSlice, filename, part + 1)
+                progress = Math.ceil( (part / numberOfParts) * 100 ) + '%'
             })
             .catch(err => {
                 submitting = false
                 imageFile = null
+                progress = 0
                 return
             })
             
@@ -192,9 +197,15 @@
             </div>
         </div>
         {/each}
-
     </div>
     
+        
+    {#if submitting}
+    <div class="border rounded-full w-full">
+        <div class="p-2 rounded-full bg-blue-300 text-white text-center text-xs" style="width:{progress}">{progress}</div>
+    </div>
+    {/if}
+
     <div class="mt-8 px-4 flex justify-end">
         <button class="{submitting ? 'hidden':''}  py-1 px-2 lg:px-3 rounded-full bg-white border border-blue-300 text-blue-500 text-xs md:text-sm lg:font-medium flex items-center active:bg-blue-500 active:text-white" on:click="{() => uploadProduct.click()}"><PlusCircle elClass="w-5 h-5 lg:w-7 h-7"/> Upload</button>
         <input type="file" class="hidden" accept=".jpg,.jpeg,.png" bind:this="{uploadProduct}" on:input="{sendFile}">

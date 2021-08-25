@@ -93,7 +93,12 @@
 
     function autoUpdateJobExperiences(jobExp) {
         if ( 'id' in jobExp ) jobExp.id = jobExp.id.toString()
-        if ( !Object.values(jobExp).every(nonEmptyStr) ) return
+
+        const checkJobExp = JSON.parse(JSON.stringify(jobExp))
+        delete checkJobExp.start
+        delete checkJobExp.end
+
+        if ( !Object.values(checkJobExp).every(nonEmptyStr) ) return
 
         jobExp.start = jobExp.startYear + '-' + jobExp.startMonth
         jobExp.end = jobExp.endYear + '-' + jobExp.endMonth
